@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARCHIVE // 00:00</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f3efe6;
+      --surface: #faf8f3;
+      --surface-2: #ede7db;
+      --ink: #181715;
+      --muted: #6e6960;
+      --line: #d5cec0;
+      --accent: #c84b31;
+      --accent-soft: rgba(200, 75, 49, 0.1);
+      --serif: 'Playfair Display', Georgia, serif;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
+    body.dark {
+      --bg: #111110;
+      --surface: #191817;
+      --surface-2: #22201e;
+      --ink: #f2efe9;
+      --muted: #918c82;
+      --line: #2d2b28;
+      --accent: #e56b50;
+      --accent-soft: rgba(229, 107, 80, 0.14);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(var(--line) 0.75px, transparent 0.75px);
+      background-size: 18px 18px;
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.65;
+      min-height: 100vh;
+      padding: 20px 16px 48px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .shell {
+      max-width: 520px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-track {
+      width: 100%;
+      height: 3px;
+      background: var(--surface-2);
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    header {
+      padding: 20px 22px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .brand {
+      font-family: var(--mono);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .brand span { color: var(--accent); }
+    .meta-sub {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+    .pill {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      background: var(--surface-2);
+      color: var(--ink);
+    }
+    .theme-toggle {
+      cursor: pointer;
+      background: transparent;
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--ink); }
+    nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-2);
+    }
+    .nav-btn {
+      padding: 11px 4px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      border: none;
+      border-right: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .nav-btn:last-child { border-right: none; }
+    .nav-btn.active {
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 700;
+      box-shadow: inset 0 -2px 0 var(--accent);
+    }
+    .page {
+      display: none;
+      padding: 26px 22px 28px;
+      animation: fadeSlide 0.35s ease;
+    }
+    .page.active { display: block; }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .kicker {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .kicker::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+    h2 {
+      font-family: var(--serif);
+      font-size: 1.65rem;
+      line-height: 1.22;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+    h2 em { font-style: italic; color: var(--accent); }
+    p {
+      font-size: 0.92rem;
+      margin-bottom: 14px;
+      color: var(--ink);
+    }
+    .dropcap::first-letter {
+      font-family: var(--serif);
+      float: left;
+      font-size: 3.1rem;
+      line-height: 0.85;
+      padding-right: 10px;
+      padding-top: 4px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .secret-trigger {
+      border-bottom: 1.5px dashed var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0 2px;
+      transition: background 0.2s;
+    }
+    .secret-trigger:hover { background: var(--accent-soft); }
+    .stamp-box {
+      margin-top: 20px;
+      padding: 16px;
+      border: 1px solid var(--accent);
+      background: var(--accent-soft);
+      position: relative;
+    }
+    .stamp-title {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 16px;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--surface);
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.2s;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-accent {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      width: 100%;
+    }
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--line);
+      color: var(--ink);
+      width: 100%;
+    }
+    .card-item {
+      border: 1px solid var(--line);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      background: var(--surface-2);
+      transition: border-color 0.2s, transform 0.12s;
+      cursor: pointer;
+    }
+    .card-item:active { transform: scale(0.99); }
+    .card-item.anomaly { border-style: dashed; }
+    .card-item.unlocked { border-color: var(--accent); border-style: solid; }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .card-title { font-weight: 600; font-size: 0.94rem; margin-bottom: 3px; }
+    .card-desc { font-size: 0.82rem; color: var(--muted); margin: 0; }
+    .tuner-deck {
+      border: 1px solid var(--line);
+      background: var(--surface-2);
+      padding: 20px 16px;
+      margin: 16px 0;
+      text-align: center;
+    }
+    .freq-readout {
+      font-family: var(--mono);
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+    .bars {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 4px;
+      height: 36px;
+      margin: 14px 0;
+    }
+    .bar {
+      width: 4px;
+      height: 8px;
+      background: var(--muted);
+      opacity: 0.35;
+      transition: height 0.15s ease, background 0.2s, opacity 0.2s;
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      margin: 10px 0 8px;
+      cursor: pointer;
+    }
+    footer {
+      padding: 12px 22px;
+      border-top: 1px solid var(--line);
+      background: var(--surface-2);
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+    .hidden { display: none !important; }
+    .secret-wrap {
+      max-width: 520px;
+      margin: 12px auto 0;
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      padding: 32px 24px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16);
+      animation: fadeSlide 0.5s ease;
+    }
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 14, 13, 0.86);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+    .modal-box {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 26px 22px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell" id="mainApp">
+    <div class="progress-track"><div class="progress-fill" id="progressBar"></div></div>
+
+    <header>
+      <div>
+        <div class="brand">ARCHIVE <span>//</span> 00:00</div>
+        <div class="meta-sub">EDISI TERBATAS &bull; ZINE ANALOG</div>
+      </div>
+      <div class="header-actions">
+        <span class="pill" id="badgeCount">0/3</span>
+        <button class="pill theme-toggle" id="themeBtn">☀ Senja</button>
+      </div>
+    </header>
+
+    <nav>
+      <button class="nav-btn active" data-page="p1">01.BERANDA</button>
+      <button class="nav-btn" data-page="p2">02.ARSIP</button>
+      <button class="nav-btn" data-page="p3">03.SINYAL</button>
+      <button class="nav-btn" data-page="p4">04.INFO</button>
+    </nav>
+
+    <!-- HALAMAN 1 -->
+    <section class="page active" id="p1">
+      <div class="kicker">ISSUE 01 // PROLOG</div>
+      <h2>Catatan Kecil tentang Hal yang Sering <em>Terlewat.</em></h2>
+      <p class="dropcap">Kita sering berjalan terlalu cepat melewati hari—membalas kabar seperlunya, menunda cerita panjang, dan menyimpan banyak hal di kepala tanpa sempat benar-benar mengucapkannya.</p>
+      <p>Padahal, di antara detail kecil yang sering <span class="secret-trigger" id="clueWord">terlewat</span> dalam obrolan sehari-hari, ada satu perasaan yang pelan-pelan tumbuh dan selalu menemukan jalan pulang setiap kali namamu muncul.</p>
+      <p style="color:var(--muted);font-size:0.85rem;">Halaman ini tidak dibuat untuk dibaca terburu-buru. Perhatikan setiap detail yang terasa berbeda.</p>
+
+      <div class="stamp-box hidden" id="clue1Box">
+        <div class="stamp-title">[01/03 DITEMUKAN] // CLUE_01</div>
+        <p style="font-size:0.84rem;margin-bottom:10px;">Matamu jeli. Sekarang buka tab <strong>02.ARSIP</strong>, temukan berkas terakhir (<strong>#04</strong>), lalu ketuk <strong>3 kali</strong>.</p>
+        <button class="btn" onclick="goPage('p2')">Lanjut ke Arsip &rarr;</button>
+      </div>
+    </section>
+
+    <!-- HALAMAN 2 -->
+    <section class="page" id="p2">
+      <div class="kicker">ISSUE 02 // INDEKS MEMORI</div>
+      <h2>Potongan yang <em>Tersimpan.</em></h2>
+
+      <div class="card-item">
+        <div class="card-top"><span>#01 // CATATAN</span><span>TERARSIP</span></div>
+        <div class="card-title">Obrolan Singkat yang Selalu Ditunggu</div>
+        <p class="card-desc">Topik sederhana yang entah kenapa selalu berhasil bikin hari terasa lebih ringan.</p>
+      </div>
+
+      <div class="card-item">
+        <div class="card-top"><span>#02 // OBSERVASI</span><span>TERARSIP</span></div>
+        <div class="card-title">Detail Kecil yang Nggak Pernah Lupa</div>
+        <p class="card-desc">Cara kamu bercerita dan kebiasaan kecil yang diam-diam selalu bikin senyum sendiri.</p>
+      </div>
+
+      <div class="card-item">
+        <div class="card-top"><span>#03 // DRAF</span><span>TERARSIP</span></div>
+        <div class="card-title">Kalimat yang Berkali-kali Dihapus</div>
+        <p class="card-desc">Sudah diketik rapi di kolom chat, tapi selalu ragu buat menekan tombol kirim.</p>
+      </div>
+
+      <div class="card-item anomaly" id="card04">
+        <div class="card-top"><span>#04 // ANOMALI</span><span id="tapStatus" style="color:var(--accent);">[ ○ ○ ○ ]</span></div>
+        <div class="card-title">Transmisi Tanpa Tanggal</div>
+        <p class="card-desc">Berkas terkunci. Membutuhkan ketukan berulang untuk membuka koordinat frekuensi.</p>
+      </div>
+
+      <div class="stamp-box hidden" id="clue2Box">
+        <div class="stamp-title">[02/03 DITEMUKAN] // CLUE_02</div>
+        <p style="font-size:0.84rem;margin-bottom:10px;">Koordinat terbuka! Buka tab <strong>03.SINYAL</strong> dan geser penala tepat ke gelombang <strong>dengan clue yang berkaitan diriku sebagai MHz</strong>.</p>
+        <button class="btn" onclick="goPage('p3')">Lanjut ke Sinyal &rarr;</button>
+      </div>
+    </section>
+    <!-- HALAMAN 3 -->
+    <section class="page" id="p3">
+      <div class="kicker">ISSUE 03 // PENERIMA GELOMBANG</div>
+      <h2>Penala Frekuensi <em>Analog.</em></h2>
+      <p style="font-size:0.85rem;color:var(--muted);">Geser tuner di bawah perlahan sampai bar sinyal menangkap gelombang tersembunyi.</p>
+
+      <div class="tuner-deck">
+        <div class="freq-readout" id="freqText">94.2 MHz</div>
+        <div class="bars" id="signalBars"></div>
+        <input type="range" id="freqSlider" min="880" max="2000" value="942" />
+        <div style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);" id="signalMsg">STATIC NOISE // CARI GELOMBANG TEPAT</div>
+      </div>
+
+      <div class="stamp-box hidden" id="clue3Box">
+        <div class="stamp-title">[03/03 SINYAL TERKUNCI]</div>
+        <p style="font-size:0.84rem;margin-bottom:12px;">Seluruh fragmen lengkap. Transmisi utama siap dibuka sekarang.</p>
+        <button class="btn btn-accent" id="unlockFinalBtn">Buka Pesan Rahasia &rarr;</button>
+      </div>
+    </section>
+
+    <!-- HALAMAN 4 -->
+    <section class="page" id="p4">
+      <div class="kicker">ISSUE 04 // KOLOFON</div>
+      <h2>Tentang <em>Arsip Ini.</em></h2>
+      <p><strong>ARCHIVE // 00:00</strong> dirancang sebagai catatan interaktif minimalis yang menyembunyikan satu pesan utama di balik detail-detail kecil. @lan17yy (atau mungkin 1212?)</p>
+      <p style="font-size:0.84rem;color:var(--muted);">Jika kamu menemukan halaman ini, mulailah membaca dari halaman pertama dengan teliti. Tidak ada petunjuk yang muncul secara kebetulan.</p>
+    </section>
+
+    <footer>
+      <span id="pageIndicator">HALAMAN 01 / 04</span>
+      <span>ARCHIVAL SYSTEM</span>
+    </footer>
+  </div>
+
+  <!-- LAYAR PENGAKUAN RAHASIA -->
+  <div class="secret-wrap hidden" id="secretPage">
+    <div class="kicker">121.2 MHz // TRANSMISI TERBUKA</div>
+    <h2 style="font-size:1.85rem;">Mau jadi <em>anu my gf</em> ndak hehe?</h2>
+    <p>Dari sekian banyak halaman dan hal-hal kecil yang sempat terlewat tadi, sebenarnya cuma kalimat ini yang dari kemarin pengen aku sampaikan langsung ke kamu.</p>
+    <p style="font-size:0.85rem;color:var(--muted);">Pilih jawabanmu di bawah—otomatis akan langsung mengarahkan ke rc wa ku.</p>
+
+    <div style="margin-top:22px;display:grid;gap:10px;">
+      <button class="btn btn-accent" id="btnYes">Iya, aku mau</button>
+      <button class="btn btn-ghost" id="btnNo">Maaf, belum bisa</button>
+    </div>
+  </div>
+
+  <!-- MODAL REDIRECT WHATSAPP -->
+  <div class="modal-backdrop hidden" id="waOverlay">
+    <div class="modal-box">
+      <div class="stamp-title">MENGHUBUNGKAN...</div>
+      <h3 style="font-family:var(--serif);font-size:1.35rem;margin-bottom:8px;">Mengarahkan ke WhatsApp</h3>
+      <p style="font-size:0.84rem;color:var(--muted);margin:0;">Membuka ruang chat dengan pesan pilihanmu...</p>
+    </div>
+  </div>
+
+  <script>
+    // ==============================================
+    // ATUR NOMOR & ISI PESAN WHATSAPP DI SINI
+    // ==============================================
+    const CONFIG = {
+      nomorWA: "6285648469063", // Ganti nomor WA tujuan (format 628...)
+      pesanMau: "Halo! Aku udah nemuin pesan rahasia di 121.2 MHz... dan jawabannya: Iya, aku mau..",
+      pesanEnggak: "Halo, aku udah baca pesan rahasia di 121.2 MHz. Makasih udah jujur, tapi maaf aku gmw."
+    };
+
+    const state = { c1: false, c2: false, c3: false, taps: 0 };
+
+    // Buat 20 bar visualizer sinyal
+    const barsWrap = document.getElementById("signalBars");
+    for (let i = 0; i < 20; i++) {
+      const b = document.createElement("div");
+      b.className = "bar";
+      barsWrap.appendChild(b);
+    }
+    const allBars = document.querySelectorAll(".bar");
+
+    function renderBars(proximity, locked) {
+      allBars.forEach((bar, idx) => {
+        const wave = Math.sin((idx + proximity * 10) * 0.7) * 0.5 + 0.5;
+        const h = locked ? 14 + (idx % 3) * 7 : 6 + Math.round(proximity * 24 * wave);
+        bar.style.height = h + "px";
+        bar.style.background = locked ? "var(--accent)" : (proximity > 0.75 ? "var(--ink)" : "var(--muted)");
+        bar.style.opacity = locked ? "1" : (0.3 + proximity * 0.65).toFixed(2);
+      });
+    }
+    renderBars(0.2, false);
+
+    // Toggle Tema Senja / Malam
+    const themeBtn = document.getElementById("themeBtn");
+    themeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      themeBtn.textContent = document.body.classList.contains("dark") ? "☾ Malam" : "☀ Senja";
+    });
+
+    // Navigasi Halaman
+    const pageLabels = { p1: "HALAMAN 01 / 04", p2: "HALAMAN 02 / 04", p3: "HALAMAN 03 / 04", p4: "HALAMAN 04 / 04" };
+    function goPage(id) {
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.page === id));
+      document.querySelectorAll(".page").forEach(p => p.classList.toggle("active", p.id === id));
+      document.getElementById("pageIndicator").textContent = pageLabels[id];
+    }
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+      btn.addEventListener("click", () => goPage(btn.dataset.page));
+    });
+
+    function syncProgress() {
+      const done = [state.c1, state.c2, state.c3].filter(Boolean).length;
+      document.getElementById("badgeCount").textContent = done + "/3";
+      document.getElementById("progressBar").style.width = ((done / 3) * 100) + "%";
+    }
+
+    // Clue 1: Ketuk kata "terlewat"
+    document.getElementById("clueWord").addEventListener("click", () => {
+      state.c1 = true;
+      syncProgress();
+      document.getElementById("clue1Box").classList.remove("hidden");
+    });
+
+    // Clue 2: Ketuk kartu #04 3x
+    document.getElementById("card04").addEventListener("click", () => {
+      if (!state.c1) {
+        document.getElementById("tapStatus").textContent = "CEK BERANDA DULU";
+        return;
+      }
+      state.taps++;
+      const dots = ["[ ● ○ ○ ]", "[ ● ● ○ ]", "[ ● ● ● ]"];
+      if (state.taps < 3) {
+        document.getElementById("tapStatus").textContent = dots[state.taps - 1];
+      } else {
+        state.c2 = true;
+        syncProgress();
+        document.getElementById("tapStatus").textContent = "[ TERBUKA ]";
+        document.getElementById("card04").classList.add("unlocked");
+        document.getElementById("clue2Box").classList.remove("hidden");
+      }
+    });
+
+    // Clue 3: Tuner 121.2 MHz
+    const slider = document.getElementById("freqSlider");
+    slider.addEventListener("input", () => {
+      const val = parseInt(slider.value, 10);
+      document.getElementById("freqText").textContent = (val / 10).toFixed(1) + " MHz";
+      const dist = Math.abs(val - 1212);
+      const proximity = Math.max(0, 1 - dist / 80);
+      const msg = document.getElementById("signalMsg");
+
+      if (val === 1212) {
+        if (state.c1 && state.c2) {
+          state.c3 = true;
+          syncProgress();
+          renderBars(1, true);
+          msg.textContent = "SIGNAL LOCKED // 121.2 MHz TERHUBUNG";
+          msg.style.color = "var(--accent)";
+          document.getElementById("clue3Box").classList.remove("hidden");
+        } else {
+          renderBars(0.9, false);
+          msg.textContent = "TERENKRIPSI // SELESAIKAN BERANDA & ARSIP DULU";
+        }
+      } else {
+        renderBars(proximity, false);
+        msg.textContent = proximity > 0.7 ? "SINYAL MENDEKAT..." : "STATIC NOISE // CARI GELOMBANG TEPAT";
+        msg.style.color = "var(--muted)";
+      }
+    });
+
+    // Buka Layar Rahasia
+    document.getElementById("unlockFinalBtn").addEventListener("click", () => {
+      document.getElementById("mainApp").classList.add("hidden");
+      document.getElementById("secretPage").classList.remove("hidden");
+    });
+
+    // Redirect ke WhatsApp
+    function bukaWhatsApp(isiPesan) {
+      document.getElementById("waOverlay").classList.remove("hidden");
+      let nomor = CONFIG.nomorWA.replace(/\D/g, "");
+      if (nomor.startsWith("0")) nomor = "62" + nomor.slice(1);
+      const url = "https://wa.me/" + nomor + "?text=" + encodeURIComponent(isiPesan);
+      setTimeout(() => { window.location.href = url; }, 750);
+    }
+
+    document.getElementById("btnYes").addEventListener("click", () => bukaWhatsApp(CONFIG.pesanMau));
+    document.getElementById("btnNo").addEventListener("click", () => bukaWhatsApp(CONFIG.pesanEnggak));
+  </script>
+</body>
+</html>
